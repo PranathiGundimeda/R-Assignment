@@ -1,0 +1,83 @@
+---
+title: "R Assignment 2"
+output:
+  pdf_document: default
+  word_document: default
+date: '2022-04-08'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Data
+```{r}
+Data <- read.csv("C:/Users/prana/Downloads/archive (1)/Kaagle_Upload.csv", header=FALSE)
+```
+#Print Structure
+```{r}
+str(Data)
+```
+#List Variables
+```{r}
+ls(Data)
+```
+#Print the top 15 rows
+```{r}
+head(Data, 15)
+```
+#User defined function and new data frame
+```{r}
+MEAN <- function (x){
+result <- mean(x)
+print(result)
+}
+mydata <- data.frame(vehicle.m = c(18, 9, 4, 15, 9, 4, 14, 4, 18, 4, 14, 5, 18, 2 ,2), driver.age = c(45, 25, 51, 50, 27, 46, 27, 33, 24, 25, 43, 29, 43, 41, 23), vehicle.age = c(11, 1, -1, 1, -1, -1, 8, 10, 1, 8, 6, -1, 5, 1, 1))
+MEAN(mydata$driver.age)
+```
+#Filter rows
+```{r}
+print(filter(Data, "V16"=="45" & "V20"=="11"))
+```
+#Remove missing values
+```{r}
+library(dplyr) 
+Data %>% distinct("V1", .keep_all= TRUE)
+```
+#Rename some of column names
+```{r}
+colnames(Data)[colnames(Data) %in% c("V2", "V3", "V4") ] <- c("V.ref", "V.type", "t&a")
+```
+#Add new variables by using a mathematical function
+```{r}
+mydata %>% mutate(Newage = driver.age*2)
+```
+#Create a training set
+```{r}
+RandomNum <- runif(50, 1, 99)
+```
+#Print the summary Statistics
+```{r}
+summary(Data)
+```
+#Perform statistical functions
+```{r}
+mean(mydata$driver.age)
+median(mydata$driver.age)
+mode(mydata$driver.age)
+range(mydata$driver.age)
+```
+#Plot a scatter plot
+```{r}
+plot(mydata$driver.age, mydata$vehicle.age, main = "Driver age Vs Vehicle age", xlab = "Age of driver", ylab = "Age of Vehicle")
+```
+#plot bar plot
+```{r}
+library(ggplot2)
+ggplot(data = Data, aes( x="v16", fill= factor("v35")))+ geom_bar()
+```
+#correlation between two variables by applying least square linear regression model
+```{r}
+cor(mydata$driver.age, mydata$vehicle.age)
+```
+```{r}
+```
